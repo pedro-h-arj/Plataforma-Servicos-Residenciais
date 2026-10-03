@@ -1,0 +1,27 @@
+body {
+    background-color: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+.form-control,
+.form-select {
+    padding: 10px;
+}
+
+.btn-primary {
+    background-color: #2457a6;
+    border-color: #2457a6;
+}
+
+.btn-primary:hover {
+    background-color: #19427f;
+}
