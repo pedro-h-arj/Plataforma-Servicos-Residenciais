@@ -30,8 +30,18 @@
                         Olá, {{ current_user.nome }}
                     </span>
 
+                    <a
+                        href="{{ url_for('perfil') }}"
+                        class="btn btn-outline-light btn-sm"
+                    >
+                        Meu perfil
+                    </a>
+
                     <form method="POST" action="{{ url_for('logout') }}">
-                        <button class="btn btn-outline-light btn-sm" type="submit">
+                        <button
+                            class="btn btn-outline-light btn-sm"
+                            type="submit"
+                        >
                             Sair
                         </button>
                     </form>

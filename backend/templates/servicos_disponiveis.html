@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block titulo %}Serviços disponíveis{% endblock %}
+
+{% block conteudo %}
+
+<div class="mb-4">
+    <h2>Serviços disponíveis</h2>
+
+    <p class="text-muted">
+        Encontre profissionais e serviços residenciais disponíveis na plataforma.
+    </p>
+</div>
+
+<form method="GET" action="{{ url_for('servicos_disponiveis') }}" class="mb-4">
+
+    <div class="input-group">
+        <input
+            type="text"
+            name="busca"
+            class="form-control"
+            placeholder="Busque por serviço, categoria ou profissional"
+            value="{{ busca }}"
+        >
+
+        <button type="submit" class="btn btn-primary">
+            Buscar
+        </button>
+    </div>
+
+</form>
+
+{% if servicos %}
+
+    <div class="row g-4">
+
+        {% for servico in servicos %}
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card h-100 shadow-sm">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            {{ servico.nome }}
+                        </h5>
+
+                        <p class="text-muted mb-2">
+                            {{ servico.categoria }}
+                        </p>
+
+                        <p class="card-text">
+                            {{ servico.descricao }}
+                        </p>
+
+                        {% if servico.valor_estimado is not none %}
+                            <p>
+                                <strong>Valor estimado:</strong>
+                                R$ {{ "%.2f"|format(servico.valor_estimado) }}
+                            </p>
+                        {% else %}
+                            <p>
+                                <strong>Valor:</strong>
+                                A combinar
+                            </p>
+                        {% endif %}
+
+                        <hr>
+
+                        <p class="mb-0">
+                            <strong>Prestador:</strong>
+                            {{ servico.prestador_nome }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% else %}
+
+    {% if busca %}
+
+        <div class="alert alert-warning">
+            Nenhum serviço encontrado para:
+            <strong>{{ busca }}</strong>
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-info">
+            No momento, não há serviços cadastrados na plataforma.
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}
