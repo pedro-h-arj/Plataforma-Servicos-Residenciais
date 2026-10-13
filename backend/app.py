@@ -642,5 +642,41 @@ def perfil():
             conexao.close()            
  
 
+@app.route("/admin/usuarios")
+@perfil_requerido("ADMIN")
+def admin_usuarios():
+    conexao = None
+    cursor = None
+
+    try:
+        conexao = conectar_banco()
+        cursor = conexao.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT id, nome, email, perfil, data_cadastro
+            FROM usuarios
+            ORDER BY id DESC
+        """)
+
+        usuarios = cursor.fetchall()
+
+        return render_template(
+            "admin_usuarios.html",
+            usuarios=usuarios
+        )
+
+    except Exception as erro:
+        print("Erro ao consultar usuários:", erro)
+        flash("Não foi possível consultar os usuários.", "danger")
+        return redirect(url_for("painel"))
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if conexao and conexao.is_connected():
+            conexao.close()
+
+
 if __name__ == "__main__":
     app.run(debug=True)

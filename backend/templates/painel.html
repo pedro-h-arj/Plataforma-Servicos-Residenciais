@@ -4,80 +4,278 @@
 
 {% block conteudo %}
 
-<div class="card shadow-sm">
-    <div class="card-body p-4">
+<div class="dashboard-header mb-4">
 
-        <h2>Bem-vindo, {{ current_user.nome }}!</h2>
+    <div>
+        <span class="text-muted small">
+            PAINEL
+        </span>
+
+        <h1 class="mt-1 mb-2">
+            Olá, {{ current_user.nome }}! 👋
+        </h1>
 
         {% if current_user.perfil == "CLIENTE" %}
 
-            <p class="mt-3">
-                Você está acessando a área do cliente.
+            <p class="text-muted mb-0">
+                Encontre profissionais e serviços para sua casa.
             </p>
-
-            <p>
-                Aqui você poderá encontrar profissionais e serviços
-                residenciais disponíveis na plataforma.
-            </p>
-
-            <div class="mt-4">
-                <a
-                    href="{{ url_for('servicos_disponiveis') }}"
-                    class="btn btn-primary"
-                >
-                    Encontrar serviços
-                </a>
-            </div>
 
         {% elif current_user.perfil == "PRESTADOR" %}
 
-            <p class="mt-3">
-                Você está acessando a área do prestador.
+            <p class="text-muted mb-0">
+                Gerencie os serviços que você oferece.
             </p>
+
+        {% elif current_user.perfil == "ADMIN" %}
+
+            <p class="text-muted mb-0">
+                Gerencie a plataforma e seus usuários.
+            </p>
+
+        {% endif %}
+    </div>
+
+</div>
+
+
+{% if current_user.perfil == "CLIENTE" %}
+
+    <div class="dashboard-hero mb-4">
+
+        <div>
+            <span class="badge bg-light text-primary mb-3">
+                Área do cliente
+            </span>
+
+            <h2>
+                Encontre o profissional ideal para o seu serviço.
+            </h2>
 
             <p>
-                Aqui você poderá cadastrar e gerenciar os serviços
-                residenciais que oferece.
+                Consulte serviços residenciais oferecidos por
+                profissionais cadastrados na plataforma.
             </p>
 
-            <div class="mt-4">
+            <a
+                href="{{ url_for('servicos_disponiveis') }}"
+                class="btn btn-primary"
+            >
+                <i class="bi bi-search"></i>
+                Encontrar serviços
+            </a>
+        </div>
+
+        <div class="dashboard-hero-icon">
+            <i class="bi bi-house-check-fill"></i>
+        </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-tools"></i>
+                </div>
+
+                <h5>Serviços residenciais</h5>
+
+                <p>
+                    Encontre diferentes tipos de serviços
+                    disponíveis para sua residência.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-person-check"></i>
+                </div>
+
+                <h5>Profissionais</h5>
+
+                <p>
+                    Consulte profissionais que oferecem
+                    serviços pela plataforma.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+
+                <h5>Praticidade</h5>
+
+                <p>
+                    Encontre o serviço que precisa de forma
+                    simples e organizada.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% elif current_user.perfil == "PRESTADOR" %}
+
+    <div class="dashboard-hero mb-4">
+
+        <div>
+
+            <span class="badge bg-light text-primary mb-3">
+                Área do prestador
+            </span>
+
+            <h2>
+                Divulgue seus serviços.
+            </h2>
+
+            <p>
+                Cadastre e gerencie os serviços residenciais
+                que você oferece aos clientes.
+            </p>
+
+            <div class="d-flex gap-2 flex-wrap">
+
                 <a
                     href="{{ url_for('cadastrar_servico') }}"
                     class="btn btn-primary"
                 >
+                    <i class="bi bi-plus-circle"></i>
                     Cadastrar serviço
                 </a>
 
                 <a
                     href="{{ url_for('meus_servicos') }}"
-                    class="btn btn-outline-primary ms-2"
+                    class="btn btn-outline-primary"
                 >
+                    <i class="bi bi-list-ul"></i>
                     Meus serviços
                 </a>
 
             </div>
 
-        {% elif current_user.perfil == "ADMIN" %}
+        </div>
 
-            <p class="mt-3">
-                Você está acessando a área administrativa.
-            </p>
-
-            <p>
-                Aqui você poderá administrar os usuários e as
-                funcionalidades da plataforma.
-            </p>
-
-        {% endif %}
-
-        <hr>
-
-        <p>
-            Seu perfil:
-            <strong>{{ current_user.perfil }}</strong>
-        </p>
+        <div class="dashboard-hero-icon">
+            <i class="bi bi-tools"></i>
+        </div>
 
     </div>
+
+
+    <div class="row g-4">
+
+        <div class="col-md-6">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-plus-circle"></i>
+                </div>
+
+                <h5>Cadastrar serviço</h5>
+
+                <p>
+                    Adicione novos serviços residenciais
+                    que você oferece.
+                </p>
+
+                <a
+                    href="{{ url_for('cadastrar_servico') }}"
+                    class="text-decoration-none"
+                >
+                    Cadastrar agora →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-gear"></i>
+                </div>
+
+                <h5>Gerenciar serviços</h5>
+
+                <p>
+                    Consulte, edite ou exclua os serviços
+                    que você já cadastrou.
+                </p>
+
+                <a
+                    href="{{ url_for('meus_servicos') }}"
+                    class="text-decoration-none"
+                >
+                    Gerenciar serviços →
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% elif current_user.perfil == "ADMIN" %}
+
+    
+    <div class="dashboard-hero">
+        <div>
+            <span class="page-eyebrow text-white">ÁREA ADMINISTRATIVA</span>
+            <h1 class="text-white">Painel do administrador</h1>
+            <p class="text-white mb-3">
+                Consulte as contas cadastradas na plataforma.
+            </p>
+            <a href="{{ url_for('admin_usuarios') }}"
+               class="btn btn-light">
+                <i class="bi bi-people me-1"></i>
+                Gerenciar usuários
+            </a>
+        </div>
+        <div class="dashboard-hero-icon">
+            <i class="bi bi-shield-check"></i>
+        </div>
+    </div>
+
+
+{% endif %}
+
+
+<div class="dashboard-footer mt-5">
+
+    <span>
+        <i class="bi bi-person-circle"></i>
+        Perfil:
+        <strong>{{ current_user.perfil }}</strong>
+    </span>
+
 </div>
 
 {% endblock %}

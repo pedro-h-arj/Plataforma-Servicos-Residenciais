@@ -1,0 +1,67 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}Gerenciar usuários | Serviços Residenciais{% endblock %}
+
+{% block conteudo %}
+<div class="page-heading mb-4">
+    <div>
+        <span class="page-eyebrow">ÁREA ADMINISTRATIVA</span>
+        <h1>Gerenciar usuários</h1>
+        <p class="text-muted mb-0">
+            Consulte as contas cadastradas na plataforma.
+        </p>
+    </div>
+    <div class="page-heading-icon">
+        <i class="bi bi-people"></i>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        {% if usuarios %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3">Nome</th>
+                        <th>E-mail</th>
+                        <th>Perfil</th>
+                        <th>Cadastro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td class="ps-3">{{ usuario.nome }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>
+                            <span class="badge text-bg-secondary">
+                                {{ usuario.perfil }}
+                            </span>
+                        </td>
+                        <td>
+                            {{ usuario.data_cadastro.strftime('%d/%m/%Y')
+                               if usuario.data_cadastro else '—' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h2>Nenhum usuário encontrado</h2>
+            <p>Não há usuários cadastrados para exibir.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{{ url_for('painel') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>
+        Voltar ao painel
+    </a>
+</div>
+{% endblock %}

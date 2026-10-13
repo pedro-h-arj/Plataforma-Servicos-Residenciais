@@ -1,89 +1,109 @@
+
 {% extends "base.html" %}
 
-{% block titulo %}Meus Serviços{% endblock %}
+{% block titulo %}Meus serviços | Serviços Residenciais{% endblock %}
 
 {% block conteudo %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="page-heading mb-4">
     <div>
-        <h2>Meus serviços</h2>
+        <span class="page-eyebrow">ÁREA DO PRESTADOR</span>
+        <h1>Meus serviços</h1>
         <p class="text-muted mb-0">
-            Gerencie os serviços que você oferece.
+            Consulte e gerencie os serviços que você oferece.
         </p>
     </div>
 
     <a
-        href="{{ url_for('cadastrar_servico') }}"
+        href="{{ url_for('cadastrar_servico', origem='meus_servicos') }}"
         class="btn btn-primary"
     >
-        Cadastrar serviço
+        <i class="bi bi-plus-lg me-1"></i>
+        Novo serviço
     </a>
 </div>
 
 {% if servicos %}
 
+    <div class="results-heading mb-3">
+        <h2>Seus cadastros</h2>
+        <span class="results-label">
+            {{ servicos|length }}
+            {% if servicos|length == 1 %}
+                serviço
+            {% else %}
+                serviços
+            {% endif %}
+        </span>
+    </div>
+
     <div class="row g-4">
 
         {% for servico in servicos %}
 
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-xl-4">
+                <article class="service-card h-100">
 
-                <div class="card h-100 shadow-sm">
+                    <div class="service-card-body">
 
-                    <div class="card-body">
-
-                        <h5 class="card-title">
-                            {{ servico.nome }}
-                        </h5>
-
-                        <p class="text-muted mb-2">
+                        <div class="service-category">
+                            <i class="bi bi-tag"></i>
                             {{ servico.categoria }}
-                        </p>
+                        </div>
 
-                        <p class="card-text">
+                        <h3 class="service-title">
+                            {{ servico.nome }}
+                        </h3>
+
+                        <p class="service-description">
                             {{ servico.descricao }}
                         </p>
 
-                        {% if servico.valor_estimado is not none %}
-                            <p>
-                                <strong>Valor estimado:</strong>
-                                R$ {{ "%.2f"|format(servico.valor_estimado) }}
-                            </p>
-                        {% else %}
-                            <p class="text-muted">
-                                Valor a combinar
-                            </p>
-                        {% endif %}
+                        <div class="service-price">
+                            <span class="service-detail-label">
+                                Valor estimado
+                            </span>
+
+                            {% if servico.valor_estimado is not none %}
+                                <strong>
+                                    R$ {{ "%.2f"|format(servico.valor_estimado) }}
+                                </strong>
+                            {% else %}
+                                <strong class="price-negotiable">
+                                    A combinar
+                                </strong>
+                            {% endif %}
+                        </div>
 
                     </div>
 
-                    <div class="card-footer bg-white">
+                    <div class="service-card-actions">
 
                         <a
                             href="{{ url_for('editar_servico', servico_id=servico.id) }}"
                             class="btn btn-outline-primary btn-sm"
                         >
+                            <i class="bi bi-pencil me-1"></i>
                             Editar
                         </a>
 
                         <form
                             method="POST"
                             action="{{ url_for('excluir_servico', servico_id=servico.id) }}"
-                            class="d-inline"
+                            onsubmit="return confirm('Tem certeza que deseja excluir este serviço?');"
                         >
                             <button
                                 type="submit"
                                 class="btn btn-outline-danger btn-sm"
-                                onclick="return confirm('Tem certeza que deseja excluir este serviço?');"
                             >
+                                <i class="bi bi-trash me-1"></i>
                                 Excluir
                             </button>
                         </form>
 
                     </div>
 
-                </div>
-
+                </article>
             </div>
 
         {% endfor %}
@@ -92,8 +112,25 @@
 
 {% else %}
 
-    <div class="alert alert-info">
-        Você ainda não possui serviços cadastrados.
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="bi bi-tools"></i>
+        </div>
+
+        <h2>Você ainda não cadastrou serviços</h2>
+
+        <p>
+            Cadastre seu primeiro serviço para apresentá-lo
+            aos clientes da plataforma.
+        </p>
+
+        <a
+            href="{{ url_for('cadastrar_servico') }}"
+            class="btn btn-primary"
+        >
+            <i class="bi bi-plus-lg me-1"></i>
+            Cadastrar meu primeiro serviço
+        </a>
     </div>
 
 {% endif %}

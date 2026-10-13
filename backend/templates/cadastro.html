@@ -1,66 +1,165 @@
+
 {% extends "base.html" %}
 
-{% block titulo %}Cadastro de Usuário{% endblock %}
+{% block titulo %}Criar conta | Serviços Residenciais{% endblock %}
 
 {% block conteudo %}
 
-<div class="row justify-content-center">
-    <div class="col-md-7 col-lg-6">
+<div class="auth-container auth-container-wide">
+    <div class="auth-card">
 
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-
-                <h2 class="text-center mb-4">
-                    Criar minha conta
-                </h2>
-
-                <form method="POST" action="{{ url_for('cadastro') }}">
-
-                    <div class="mb-3">
-                        <label class="form-label">Nome completo *</label>
-                        <input type="text" name="nome"
-                               class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">E-mail *</label>
-                        <input type="email" name="email"
-                               class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Telefone</label>
-                        <input type="tel" name="telefone"
-                               class="form-control">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Senha *</label>
-                        <input type="password" name="senha"
-                               class="form-control"
-                               minlength="8" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label">Tipo de conta *</label>
-
-                        <select name="perfil" class="form-select" required>
-                            <option value="">Selecione</option>
-                            <option value="CLIENTE">Cliente</option>
-                            <option value="PRESTADOR">Prestador</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100">
-                        Criar conta
-                    </button>
-
-                </form>
-
-            </div>
+        <div class="auth-icon">
+            <i class="bi bi-person-plus"></i>
         </div>
 
+        <div class="text-center mb-4">
+            <h1 class="auth-title">Crie sua conta</h1>
+            <p class="auth-subtitle">
+                Cadastre-se para começar a usar a plataforma.
+            </p>
+        </div>
+
+        <form method="POST" action="{{ url_for('cadastro') }}">
+
+            <div class="mb-3">
+                <label for="nome" class="form-label">
+                    Nome completo *
+                </label>
+
+                <div class="input-group auth-input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-person"></i>
+                    </span>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        class="form-control"
+                        placeholder="Digite seu nome completo"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">
+                    E-mail *
+                </label>
+
+                <div class="input-group auth-input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="telefone" class="form-label">
+                    Telefone
+                </label>
+
+                <div class="input-group auth-input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-telephone"></i>
+                    </span>
+
+                    <input
+                        type="tel"
+                        id="telefone"
+                        name="telefone"
+                        class="form-control"
+                        placeholder="(61) 99999-9999"
+                        autocomplete="tel"
+                    >
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="senha" class="form-label">
+                    Senha *
+                </label>
+
+                <div class="input-group auth-input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
+
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        class="form-control"
+                        placeholder="Mínimo de 8 caracteres"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-text">
+                    Utilize pelo menos 8 caracteres.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="perfil" class="form-label">
+                    Tipo de conta *
+                </label>
+
+                <div class="input-group auth-input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-people"></i>
+                    </span>
+
+                    <select
+                        id="perfil"
+                        name="perfil"
+                        class="form-select"
+                        required
+                    >
+                        <option value="">Selecione seu perfil</option>
+                        <option value="CLIENTE">Cliente</option>
+                        <option value="PRESTADOR">Prestador</option>
+                    </select>
+                </div>
+
+                <div class="form-text">
+                    Cliente: procura serviços residenciais.
+                    Prestador: cadastra e oferece serviços.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 auth-submit">
+                Criar minha conta
+                <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+
+        </form>
+
+        <div class="auth-divider"></div>
+
+        <p class="text-center mb-0 auth-register">
+            Já possui uma conta?
+            <a href="{{ url_for('login') }}">Entrar</a>
+        </p>
+
     </div>
+
+    <p class="auth-footer text-center">
+        Seus dados são utilizados para criar seu acesso à plataforma.
+    </p>
 </div>
 
 {% endblock %}

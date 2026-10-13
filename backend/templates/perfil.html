@@ -1,89 +1,122 @@
+
 {% extends "base.html" %}
 
-{% block titulo %}Meu Perfil{% endblock %}
+{% block titulo %}Meu perfil | Serviços Residenciais{% endblock %}
 
 {% block conteudo %}
+<div class="form-page-container">
 
-<div class="row justify-content-center">
-    <div class="col-md-8 col-lg-7">
+    <div class="page-heading mb-4">
+        <div>
+            <span class="page-eyebrow">MINHA CONTA</span>
+            <h1>Meu perfil</h1>
+            <p class="text-muted mb-0">
+                Consulte e atualize suas informações pessoais.
+            </p>
+        </div>
 
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
+        <div class="page-heading-icon">
+            <i class="bi bi-person-circle"></i>
+        </div>
+    </div>
 
-                <h2 class="mb-4">Meu perfil</h2>
-
-                <form method="POST">
-
-                    <div class="mb-3">
-                        <label class="form-label">Nome</label>
-
-                        <input
-                            type="text"
-                            name="nome"
-                            class="form-control"
-                            value="{{ current_user.nome }}"
-                            required
-                        >
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">E-mail</label>
-
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            value="{{ current_user.email }}"
-                            required
-                        >
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Telefone</label>
-
-                        <input
-                            type="text"
-                            name="telefone"
-                            class="form-control"
-                            value="{{ telefone }}"
-                        >
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label">Perfil</label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            value="{{ current_user.perfil }}"
-                            disabled
-                        >
-
-                        <div class="form-text">
-                            O perfil de acesso não pode ser alterado pelo usuário.
-                        </div>
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-                        Salvar alterações
-                    </button>
-
-                    <a
-                        href="{{ url_for('painel') }}"
-                        class="btn btn-outline-secondary ms-2"
-                    >
-                        Voltar
-                    </a>
-
-                </form>
-
+    <div class="auth-card">
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="profile-avatar">
+                <i class="bi bi-person-fill"></i>
+            </div>
+            <div>
+                <h2 class="profile-name mb-1">{{ current_user.nome }}</h2>
+                <span class="profile-role">
+                    {{ current_user.perfil }}
+                </span>
             </div>
         </div>
 
+        <form method="POST">
+
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome completo</label>
+                <div class="input-group auth-input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-person"></i>
+                    </span>
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        class="form-control"
+                        value="{{ current_user.nome }}"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <div class="input-group auth-input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        value="{{ current_user.email }}"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="telefone" class="form-label">Telefone</label>
+                <div class="input-group auth-input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-telephone"></i>
+                    </span>
+                    <input
+                        type="text"
+                        id="telefone"
+                        name="telefone"
+                        class="form-control"
+                        value="{{ telefone }}"
+                        autocomplete="tel"
+                        placeholder="Informe seu telefone"
+                    >
+                </div>
+            </div>
+
+            <div class="profile-access-box mb-4">
+                <div class="d-flex align-items-start gap-2">
+                    <i class="bi bi-shield-lock mt-1"></i>
+                    <div>
+                        <strong>Perfil de acesso</strong>
+                        <p class="mb-0">
+                            Seu perfil é {{ current_user.perfil }}.
+                            Por segurança, essa informação não pode
+                            ser alterada nesta página.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('painel') }}"
+                   class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Voltar ao painel
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg me-1"></i>
+                    Salvar alterações
+                </button>
+            </div>
+
+        </form>
     </div>
 </div>
-
 {% endblock %}
